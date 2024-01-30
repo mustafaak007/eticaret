@@ -11,6 +11,12 @@ app.use(cors());
 //     res.json({message:"Api isteği başarılı bir şekilde çalışıyor"});
 // }) //deneme amaçlı yapılşmış bir get isteği
 
+// yaptığımız api'yi index.js'e tanıtmamız lazım
+
+const authRouter = require("./routers/auth.router");
+
+app.use("/api/auth", authRouter);
+
 connection();
 
 const port = process.env.PORT || 5000;
