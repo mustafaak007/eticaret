@@ -1,9 +1,25 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
+// burada da diziliş var @ ile başlayan angular kütüphaneleri daha yukarıda olmalı
+// sıralama angular kütüphaneleri, bizim eklediğimiz kütüphaneler, en sonda ise dosyalar
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes),provideHttpClient()]
+  providers: [
+    provideRouter(routes),
+    importProvidersFrom(
+      BrowserAnimationsModule,
+      NgxSpinnerModule,
+      ToastrModule.forRoot({
+        closeButton: true,
+        progressBar: true,
+      })
+    ),
+    provideHttpClient(),
+  ],
 };
