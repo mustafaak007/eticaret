@@ -14,8 +14,10 @@ app.use(cors());
 // yaptığımız api'yi index.js'e tanıtmamız lazım
 
 const authRouter = require("./routers/auth.router");
+const categoryRouter = require("./routers/category.router");
 
 app.use("/api/auth", authRouter);
+app.use("/api/category", categoryRouter);
 
 connection();
 
