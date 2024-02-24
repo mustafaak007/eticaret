@@ -1,0 +1,142 @@
+<app-blank title="Kategoriler" sectionTitle="Kategori Listesi">
+  <div class="form-group">
+    <button
+      class="btn btn-outline-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#addModal"
+    >
+      <i class="fa fa-plus"></i>
+    </button>
+    <div class="col-md-4" style="float: right">
+      <input
+        [(ngModel)]="search"
+        type="search"
+        class="form-control"
+        placeholder="Aranacak değeri giriniz..."
+      />
+    </div>
+  </div>
+
+  <app-table [heads]="['#', 'Kategori Adı', 'İşlemler']">
+    @for (category of categories | categoryPipe: search; track $index) {
+    <tr>
+      <td>{{ $index }}</td>
+      <td>{{ category.name }}</td>
+      <td>
+        <button
+          class="btn btn-outline-warning btn-sm"
+          (click)="get(category)"
+          data-bs-toggle="modal"
+          data-bs-target="#updateModal"
+        >
+          <i class="fa fa-edit"></i>
+        </button>
+        <button
+          (click)="removeById(category)"
+          class="btn btn-outline-danger btn-sm mx-1"
+        >
+          <i class="fa fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+    }
+  </app-table>
+</app-blank>
+
+<!-- Modal (Ekleme için) -->
+<div class="modal" id="addModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Kategori Ekle</h5>
+        <button
+          type="button"
+          id="addModalCloseBtn"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form autocomplete="off" #addForm="ngForm" (ngSubmit)="add(addForm)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name">Kategori Adı</label>
+            <input
+              class="form-control"
+              type="text"
+              ngModel
+              name="name"
+              id="name"
+              #name
+              [appValid]="name.validity.valid"
+              required
+              minlength="3"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Kapat
+          </button>
+          <button type="submit" class="btn btn-primary">Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal (Ekleme için) -->
+
+<!-- Modal (Güncelleme için) -->
+<div class="modal" id="updateModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Kategori Güncelle</h5>
+        <button
+          type="button"
+          id="updateModalCloseBtn"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <form
+        autocomplete="off"
+        #updateForm="ngForm"
+        (ngSubmit)="update(updateForm)"
+      >
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="updateName">Kategori Adı</label>
+            <input
+              class="form-control"
+              type="text"
+              #updateName
+              [(ngModel)]="updateCategory.name"
+              name="updateName"
+              id="updateName"
+              [appValid]="updateName.validity.valid"
+              required
+              minlength="3"
+            />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Kapat
+          </button>
+          <button type="submit" class="btn btn-warning">Güncelle</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Modal (Güncelleme için) -->

@@ -6,6 +6,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // app.get("",(req, res)=>{
 //     res.json({message:"Api isteği başarılı bir şekilde çalışıyor"});
@@ -15,9 +16,11 @@ app.use(cors());
 
 const authRouter = require("./routers/auth.router");
 const categoryRouter = require("./routers/category.router");
+const productRouter = require("./routers/product.router");
 
 app.use("/api/auth", authRouter);
-app.use("/api/category", categoryRouter);
+app.use("/api/categories", categoryRouter);
+app.use("/api/products", productRouter);
 
 connection();
 
