@@ -36,6 +36,13 @@ export const routes: Routes = [
             (c) => c.CategoriesComponent
           ),
       },
+      {
+        path: 'products',
+        loadComponent: () =>
+          import(
+            './components/products/components/products/products.component'
+          ).then((c) => c.ProductsComponent),
+      },
     ],
   },
 ];

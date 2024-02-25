@@ -44,16 +44,18 @@ router.post("/removeById", async (req, res) => {
 });
 
 // Ürün Listesi Getir
-router.get("/", async () => {
+router.post("/", async (req, res) => {
   response(res, async () => {
     const { pageNumber, pageSize, search } = req.body;
 
     let productCount = await Product.find({
-      $or: {
-        name: { $regex: search, $options: "i" },
-        // benzer olanları getirmesi için regex kullandık
-        // büyük küçük duyarlılığı için ise $options: "i" kullandık $ syntax'da var
-      },
+      $or: [
+        {
+          name: { $regex: search, $options: 'i' },
+          // benzer olanları getirmesi için regex kullandık
+          // büyük küçük duyarlılığı için ise $options: "i" kullandık $ syntax'da var
+        }
+      ]
     }).count();
 
     let products = await Product.find({
@@ -61,9 +63,11 @@ router.get("/", async () => {
       //  Bir de name:search ile name:{$regex:search} arasındaki fark regex kullanırsak search değeri ile başlayıp biten ya da
       // search değerini içeren tüm datayı döndürür
       // $options kullanarak mesela "i"büyük küçük harf duyarlılığını ortadan kaldırırız
-      $or: {
-        name: { $regex: search, $options: "i" },
-      },
+      $or: [
+        {
+          name: { $regex: search, $options: 'i' },
+        },
+      ],
     })
       .sort({ name: 1 })
       .populate("categories")
@@ -96,7 +100,7 @@ router.post("changeActiveStatus", async (req, res) => {
 });
 
 // Ürünü Id'ye Göre Getir
-router.get("/getById", async (req, res) => {
+router.post("/getById", async (req, res) => {
   response(res, async () => {
     const { _id } = req.body;
     let product = await Product.findById(_id);
@@ -105,7 +109,7 @@ router.get("/getById", async (req, res) => {
 });
 
 // Ürünü Güncelleme
-router.post("/update", upload.array(images), async (req, res) => {
+router.post("/update", upload.array("images"), async (req, res) => {
   // .array() multer (middleware) için kullanılan bir metottur, aynı alan adıyla birden fazla dosya yüklemek için kullanılır
   response(res, async () => {
     const { _id, name, stock, price, categories } = req.body;
