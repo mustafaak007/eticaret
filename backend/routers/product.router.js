@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Product = require("../models/product");
+const Category = require("../models/category");
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const upload = require("../services/file.service");
@@ -32,10 +33,17 @@ router.post("/add", upload.array("images"), async (req, res) => {
 router.post("/removeById", async (req, res) => {
   response(res, async () => {
     const { _id } = req.body;
+    let isActiveId;
 
-    const product = await Product.findById(_id);
-    for (const image of product.imageUrls) {
-      fs.unlink(image.path, () => {});
+    let products = await Product.findById(_id).populate("categories");
+
+    for (const product of products.imageUrls) {
+      fs.unlink(product.path, () => {});
+    }
+
+    for(const category of products.categories){
+      await Category.findByIdAndUpdate(category._id, { $set: { isActive: false } });
+
     }
 
     await Product.findByIdAndDelete(_id);
@@ -51,11 +59,11 @@ router.post("/", async (req, res) => {
     let productCount = await Product.find({
       $or: [
         {
-          name: { $regex: search, $options: 'i' },
+          name: { $regex: search, $options: "i" },
           // benzer olanları getirmesi için regex kullandık
           // büyük küçük duyarlılığı için ise $options: "i" kullandık $ syntax'da var
-        }
-      ]
+        },
+      ],
     }).count();
 
     let products = await Product.find({
@@ -65,7 +73,7 @@ router.post("/", async (req, res) => {
       // $options kullanarak mesela "i"büyük küçük harf duyarlılığını ortadan kaldırırız
       $or: [
         {
-          name: { $regex: search, $options: 'i' },
+          name: { $regex: search, $options: "i" },
         },
       ],
     })
@@ -89,7 +97,7 @@ router.post("/", async (req, res) => {
 });
 
 // Ürünün Aktif/Pasif Durumunu Değiştir
-router.post("changeActiveStatus", async (req, res) => {
+router.post("/changeActiveStatus", async (req, res) => {
   response(res, async () => {
     const { _id } = req.body;
     let product = await Product.findById(_id);
@@ -114,10 +122,11 @@ router.post("/update", upload.array("images"), async (req, res) => {
   response(res, async () => {
     const { _id, name, stock, price, categories } = req.body;
 
-    let product = await Product.find(_id);
-    for (const image of product.imageUrls) {
-      fs.unlink(image.path, () => {});
-    }
+    let product = await Product.findById(_id);
+    // for (const image of product.imageUrls) {
+    //   fs.unlink(image.path, () => {});
+    // }
+    // Fotoğrafları siliyoruz gereksiz yere burası hatalı
 
     let imageUrls;
     imageUrls = [...product.imageUrls, ...req.files];
@@ -143,7 +152,7 @@ router.post("/removeImageByProductIdAndIndex", async (req, res) => {
     if (product.imageUrls.length == 1) {
       res.status(500).json({
         message:
-          "Son ürün resmini silemezsiniz! En az 1 ürün resmi bylunmak zorundadır!",
+          "Son ürün resmini silemezsiniz! En az 1 ürün resmi bulunmak zorundadır!",
       });
     } else {
       let image = product.imageUrls[index];

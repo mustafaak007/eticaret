@@ -35,7 +35,6 @@ export class GenericHttpService {
     this._http.post<T>(`${this.api}/${api}`, model, {}).subscribe({
       next: (res: T) => {
         this._spinner.hide();
-        console.log(res);
         callback(res);
       },
       error: (err: HttpErrorResponse) => {

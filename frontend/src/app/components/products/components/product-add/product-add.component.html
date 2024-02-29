@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <label for="name">Ürün Adı</label>
                     <input type="text" name="name" id="name" class="form-control" ngModel required #name
-                        [appValid]="name.validity.valid" minlength="3">
+                        [appValid]="name.validity.valid" minlength="3" maxlength="16">
                     <div class="invalid-feedback">
                         Ürün adı en az 3 karakter olmalıdır!
                     </div>
@@ -14,7 +14,7 @@
                     <label for="categoriesSelect">Kategoriler</label>
                     <select class="form-control" name="categoriesSelect" id="categoriesSelect" ngModel multiple
                         #categoriesSelect>
-                        <option *ngFor="let category of categories" [value]="category._id">
+                        <option *ngFor="let category of categories" [value]="category">
                             {{category.name}}
                         </option>
                     </select>

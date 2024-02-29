@@ -1,0 +1,117 @@
+<app-blank title="Ürün Güncelleme" sectionTitle="Ürün Güncelleme">
+  <div class="row center">
+    <div class="col-md-6">
+      <form
+        #updateForm="ngForm"
+        (ngSubmit)="update(updateForm)"
+        autocomplete="off"
+      >
+        <div class="form-group">
+          <label for="name">Ürün Adı</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            class="form-control"
+            [(ngModel)]="product.name"
+            required
+            #name
+            [appValid]="name.validity.valid"
+            minlength="3"
+            maxlength="16"
+          />
+          <div class="invalid-feedback">
+            Ürün adı en az 3 karakter olmalıdır!
+          </div>
+        </div>
+        <div class="form-group mt-2">
+          <label for="categoriesSelect">Kategoriler</label>
+          <select
+            required
+            multiple
+            class="form-control"
+            name="categoriesSelect"
+            id="categoriesSelect"
+            [ngModel]="product.categories"
+          >
+            <option *ngFor="let category of categories" [value]="category">
+              {{ category.name }}
+            </option>
+          </select>
+        </div>
+        <div class="form-group mt-2">
+          <label for="stock">Stok Adedi</label>
+          <input
+            type="number"
+            name="stock"
+            id="stock"
+            class="form-control"
+            [(ngModel)]="product.stock"
+            required
+            #stock
+            [appValid]="stock.validity.valid"
+            min="1"
+          />
+          <div class="invalid-feedback">
+            Ürün stok adedi en az 1 adet olmalıdır!
+          </div>
+        </div>
+        <div class="form-group mt-2">
+          <label for="price">Birim Fiyatı</label>
+          <input
+            type="number"
+            name="price"
+            id="price"
+            class="form-control"
+            [(ngModel)]="product.price"
+            required
+            #price
+            [appValid]="price.validity.valid"
+            min="1"
+          />
+          <div class="invalid-feedback">
+            Ürün birim fiyatı en az 1 olmalıdır!
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="images">Ürün resimleri</label>
+          <input
+            type="file"
+            name="images"
+            id="images"
+            class="form-control"
+            accept="image/png, image/jpeg, image/jpg"
+            ngModel
+            multiple
+            (change)="getImages($event)"
+          />
+        </div>
+        <div class="form-group mt-2">
+          <p>Eklenen Resimler</p>
+          <span
+            (click)="removeImage(image.name, image.size, i)"
+            *ngFor="let image of imageUrls; let i = index"
+          >
+            <img [src]="image.imageUrl" class="mx-1" width="100" />
+          </span>
+        </div>
+        <div class="form-group mt-2">
+          <p>Mevcut Resimler</p>
+          <span
+            (click)="deleteImage(product._id, i)"
+            *ngFor="let image of product.imageUrls; let i = index"
+          >
+            <img
+              [src]="'http://localhost:5000/' + image.path"
+              class="mx-1"
+              width="100"
+            />
+          </span>
+        </div>
+        <div class="form-group mt-2">
+          <button class="btn btn-warning w-100">Güncelle</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</app-blank>

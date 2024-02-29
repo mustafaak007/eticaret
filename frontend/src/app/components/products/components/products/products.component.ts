@@ -6,6 +6,7 @@ import { RequestModel } from '../../../../common/models/request.model';
 import { ProductService } from '../../services/product.service';
 import { SwalService } from '../../../../common/services/swal.service';
 import { ToastrService } from 'ngx-toastr';
+import { CategoryService } from '../../../categories/services/category.service';
 
 @Component({
   selector: 'app-products',
@@ -25,6 +26,7 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private _product: ProductService,
+    private _category: CategoryService,
     private _swal: SwalService,
     private _toastr: ToastrService
   ) {}
@@ -55,5 +57,27 @@ export class ProductsComponent implements OnInit {
     if (this.request.search.length >= 3) {
       this.getAll(1);
     }
+  }
+
+  removeById(id: string) {
+    this._swal.callSwal(
+      'Ürünü silmek istediğinize emin misiniz?',
+      'Ürünü sil',
+      'Sil',
+      () => {
+        let model = { _id: id };
+        this._product.removeById(model, (res) => {
+          this._toastr.info(res.message);
+          this.getAll(this.request.pageNumber);
+        });
+      }
+    );
+  }
+
+  changeProductStatus(id: string) {
+    let model = { _id: id };
+    this._product.changeActiveStatus(model, (res) => {
+      this._toastr.info(res.message);
+    });
   }
 }

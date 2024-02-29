@@ -42,6 +42,7 @@ export class ProductService {
 
   removeById(model: any, callBack: (res: MessageResponseModel) => void) {
     this._http.post<MessageResponseModel>('products/removeById', model, (res) =>
+      
       callBack(res)
     );
   }
@@ -63,9 +64,9 @@ export class ProductService {
     );
   }
 
-  removeImageByIdAndIndex(model: any, callBack: (res: ProductModel) => void) {
-    this._http.post<ProductModel>(
-      'product/removeImageByIdAndIndex',
+  removeImageByIdAndIndex(model: any, callBack: (res: MessageResponseModel) => void) {
+    this._http.post<MessageResponseModel>(
+      'products/removeImageByProductIdAndIndex',
       model,
       (res) => callBack(res)
     );

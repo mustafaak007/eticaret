@@ -34,4 +34,22 @@ export class CategoryService {
       (res) => callBack(res)
     );
   }
+
+  changeActiveStatus(
+    _id: string,
+    isActive: boolean,
+    callBack: (res: MessageResponseModel) => void
+  ) {
+    let model = {
+      _id: _id,
+      isActive: isActive,
+    };
+    this._http.post<MessageResponseModel>(
+      'categories/changeStatus',
+      model,
+      (res) => {
+        callBack(res);
+      }
+    );
+  }
 }

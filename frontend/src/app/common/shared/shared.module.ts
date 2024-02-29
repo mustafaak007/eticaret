@@ -5,10 +5,27 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ValidDirective } from '../directives/valid.directive';
 import { BlankComponent } from '../components/blank/blank.component';
 import { TableComponent } from '../components/table/table.component';
+import { SelectIfActiveDirective } from '../directives/select-if-active.directive';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, RouterModule, FormsModule, ValidDirective, BlankComponent, TableComponent],
-  exports: [CommonModule, RouterModule, FormsModule, ValidDirective, BlankComponent, TableComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ValidDirective,
+    SelectIfActiveDirective,
+    BlankComponent,
+    TableComponent,
+  ],
+  exports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ValidDirective,
+    SelectIfActiveDirective,
+    BlankComponent,
+    TableComponent,
+  ],
 })
 export class SharedModule {}

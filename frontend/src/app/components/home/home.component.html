@@ -1,1 +1,13 @@
-<app-blank title="Ana Sayfa" sectionTitle="Ürünler"></app-blank>
+<app-blank title="Ana Sayfa" sectionTitle="Ürünler">
+  <div class="row">
+    <div class="col-md-3">
+      <ol>
+        <li>Tümü</li>
+        <li *ngFor="let category of categories">
+          {{ category.name }}
+        </li>
+      </ol>
+    </div>
+    <div class="col-md-9"></div>
+  </div>
+</app-blank>

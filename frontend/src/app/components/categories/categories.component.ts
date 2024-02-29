@@ -18,7 +18,7 @@ export class CategoriesComponent {
   categories: CategoryModel[] = [];
   updateCategory: CategoryModel = new CategoryModel();
   search: string = '';
-
+  
   constructor(
     private _toastr: ToastrService,
     private _category: CategoryService,
