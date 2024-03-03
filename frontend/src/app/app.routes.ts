@@ -57,6 +57,13 @@ export const routes: Routes = [
             './components/products/components/product-update/product-update.component'
           ).then((c) => c.ProductUpdateComponent),
       },
+      {
+        path: 'baskets',
+        loadComponent: () =>
+          import(
+            './components/baskets/components/baskets/baskets.component'
+          ).then((c) => c.BasketsComponent),
+      },
     ],
   },
 ];

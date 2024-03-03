@@ -41,9 +41,10 @@ router.post("/removeById", async (req, res) => {
       fs.unlink(product.path, () => {});
     }
 
-    for(const category of products.categories){
-      await Category.findByIdAndUpdate(category._id, { $set: { isActive: false } });
-
+    for (const category of products.categories) {
+      await Category.findByIdAndUpdate(category._id, {
+        $set: { isActive: false },
+      });
     }
 
     await Product.findByIdAndDelete(_id);
@@ -162,6 +163,47 @@ router.post("/removeImageByProductIdAndIndex", async (req, res) => {
       fs.unlink(image.path, () => {});
       res.json({ message: "Resim başarıyla kaldırıldı!" });
     }
+  });
+});
+
+// Ana Sayfa için ürün listesi getir
+router.post("/getAllForHomePage", async (req, res) => {
+  response(res, async () => {
+    // Pagination yapısı yapılacak
+    // npm scroll kütüphanesi kullanılacak
+    // request'e pageSize istiyeceğiz 10 tane
+    // her mouse aşağıya indiğinde 10'ar tane getireceğiz
+    const { pageNumber, pageSize, search, categoryId, priceFilter } = req.body;
+    let products;
+
+    if (priceFilter == "0") {
+      products = await Product.find({
+        isActive: true,
+        categories: { $regex: categoryId, $options: "i" },
+        $or: [
+          {
+            name: { $regex: search, $options: "i" },
+          },
+        ],
+      })
+        .sort({ name: 1 })
+        .populate("categories");
+
+      console.log(products);
+    } else {
+      products = await Product.find({
+        isActive: true,
+        categories: { $regex: categoryId, $options: "i" },
+        $or: [
+          {
+            name: { $regex: search, $options: "i" },
+          },
+        ],
+      })
+        .sort({ price: Number(priceFilter) })
+        .populate("categories");
+    }
+    res.json(products);
   });
 });
 

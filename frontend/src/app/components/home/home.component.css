@@ -1,0 +1,19 @@
+ul li {
+  list-style: none;
+  padding: 10px;
+  padding-left: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  margin-left: -1.5rem;
+}
+
+.cerceve {
+  padding: 10px;
+  padding-left: 0px;
+
+}
+
+.active {
+  background-color: cornflowerblue;
+  color: white;
+}

@@ -11,11 +11,9 @@ import { ProductModel } from '../models/product.model';
 export class ProductService {
   constructor(private _http: GenericHttpService) {}
 
-
   //Burada FormData kullanmamızın nedeni bir görsel'i yüklüyor olmamızdan kaynaklanabilir
   // Özellikle dosya yükleme işlemlerinde kullanılıyor, strandart js nesneleri dosya yüklemeyi desteklemez
   // Bu sebeple formdata kullanarak dosyaları sunucuya göndermek gerekir
-  
 
   add(model: FormData, callBack: (res: MessageResponseModel) => void) {
     this._http.post<MessageResponseModel>('products/add', model, (res) =>
@@ -42,7 +40,6 @@ export class ProductService {
 
   removeById(model: any, callBack: (res: MessageResponseModel) => void) {
     this._http.post<MessageResponseModel>('products/removeById', model, (res) =>
-      
       callBack(res)
     );
   }
@@ -64,9 +61,24 @@ export class ProductService {
     );
   }
 
-  removeImageByIdAndIndex(model: any, callBack: (res: MessageResponseModel) => void) {
+  removeImageByIdAndIndex(
+    model: any,
+    callBack: (res: MessageResponseModel) => void
+  ) {
     this._http.post<MessageResponseModel>(
       'products/removeImageByProductIdAndIndex',
+      model,
+      (res) => callBack(res)
+    );
+  }
+
+  //eğer dediğim pagination'u yapacaksak paginationmodel'i almalıyım
+  getAllForHomePage(
+    model: RequestModel,
+    callBack: (res: ProductModel[]) => void
+  ) {
+    this._http.post<ProductModel[]>(
+      'products/getAllForHomePage',
       model,
       (res) => callBack(res)
     );

@@ -39,14 +39,21 @@
           </ul>
         </li>
       </ul>
-        <button type="button" class="btn btn-outline-success position-relative">
-          
-          <i class="fa-solid fa-cart-shopping"></i> Sepetim
-          <span class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-danger">
-            0
-          </span>
-        </button>
-        <button class="btn btn-outline-danger mx-1" type="button">Çıkış Yap</button>
+      <button
+        routerLink="/baskets"
+        type="button"
+        class="btn btn-outline-success position-relative"
+      >
+        <i class="fa-solid fa-cart-shopping"></i> Sepetim
+        <span
+          class="position-absolute top-100 start-0 translate-middle badge rounded-pill bg-danger"
+        >
+          {{ _basket.count }}
+        </span>
+      </button>
+      <button class="btn btn-outline-danger mx-1" type="button">
+        Çıkış Yap
+      </button>
     </div>
   </div>
 </nav>
