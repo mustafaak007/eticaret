@@ -44,9 +44,15 @@
         </tr>
       </app-table>
     </div>
-    <div class="col-md-3" style="border: 1px solid #ccc; padding: 10px">
+    <div
+      (click)="createOrder()"
+      class="col-md-3"
+      style="border: 1px solid #ccc; padding: 10px"
+    >
       <h3 class="alert alert-danger">Ödenecek: {{ sum | trCurrency : "₺" }}</h3>
-      <button *ngIf="baskets.length > 0" class="btn btn-danger w-100"> Ödeme Yap</button>
+      <button *ngIf="baskets.length > 0" class="btn btn-danger w-100">
+        Ödeme Yap
+      </button>
     </div>
   </div>
 </app-blank>

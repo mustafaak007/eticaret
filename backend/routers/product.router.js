@@ -127,7 +127,6 @@ router.post("/update", upload.array("images"), async (req, res) => {
     // for (const image of product.imageUrls) {
     //   fs.unlink(image.path, () => {});
     // }
-    // Fotoğrafları siliyoruz gereksiz yere burası hatalı
 
     let imageUrls;
     imageUrls = [...product.imageUrls, ...req.files];

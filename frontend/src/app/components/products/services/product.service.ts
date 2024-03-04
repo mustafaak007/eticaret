@@ -11,7 +11,7 @@ import { ProductModel } from '../models/product.model';
 export class ProductService {
   constructor(private _http: GenericHttpService) {}
 
-  //Burada FormData kullanmamızın nedeni bir görsel'i yüklüyor olmamızdan kaynaklanabilir
+  //Burada FormData kullanmamızın nedeni bir görsel'i yüklüyor olmamızdan kaynaklananıyor
   // Özellikle dosya yükleme işlemlerinde kullanılıyor, strandart js nesneleri dosya yüklemeyi desteklemez
   // Bu sebeple formdata kullanarak dosyaları sunucuya göndermek gerekir
 
