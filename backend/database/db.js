@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
-const uri = "mongodb+srv://MongoDb:1@eticaretdb.q6mvtwq.mongodb.net/";
+//database uri
+const uri = "";
 
 const connection = () => {
   mongoose
@@ -8,8 +9,8 @@ const connection = () => {
       //options bölümü
       //   olabilicek connection hatalarının önüne geçecek iki adet options
       // node js driver versiyonu 4. ile artık bu optionlar otomatik bir şekilde etkin olarak geliyormuş
-    //   useNewUrlParser: true,
-    //   useUnifiedTopology: true,
+      //   useNewUrlParser: true,
+      //   useUnifiedTopology: true,
     })
     .then(() => console.log("Database bağlantısı başarılı"))
     .catch((err) => console.log("Bağlantı hatası! Hata: " + err.message));
